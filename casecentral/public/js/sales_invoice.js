@@ -1,6 +1,6 @@
 frappe.ui.form.on('Sales Invoice', {
     refresh: function(frm) {
-		if (cint(frm.doc.docstatus==0) && cur_frm.page.current_view_name!=="pos" && !frm.doc.is_return) {
+		if (cint(frm.doc.docstatus==0) && frm.page.current_view_name!=="pos" && !frm.doc.is_return) {
             frm.add_custom_button(__('Legal Services'), function() {
                 get_legal_services_to_invoice(frm);
             },__("Get Items From"));

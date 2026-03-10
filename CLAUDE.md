@@ -53,10 +53,10 @@ casecentral/
 | Layer | Technology |
 |-------|-----------|
 | Backend framework | Frappe (Python) |
-| Python version | 3.10 |
-| Database | MariaDB 10.6 |
+| Python version | 3.12 |
+| Database | MariaDB 10.11 |
 | Frontend | Frappe Desk (JS + Frappe UI) |
-| Node version | 14 |
+| Node version | 20 |
 | Package manager | pip + yarn/npm |
 | CI | GitHub Actions |
 
@@ -180,9 +180,9 @@ Defined in `hooks.py` under `scheduler_events`:
 
 ### Prerequisites
 
-- Python 3.10+
-- Node.js 14
-- MariaDB 10.6
+- Python 3.12+
+- Node.js 20
+- MariaDB 10.11
 - Redis
 - `frappe-bench` CLI
 
@@ -250,7 +250,7 @@ GitHub Actions workflow: `.github/workflows/ci.yml`
 **Triggers**: Push to `develop` branch, all pull requests.
 
 **Steps**:
-1. Spin up Ubuntu + Python 3.10 + Node 14 + MariaDB 10.6
+1. Spin up Ubuntu + Python 3.12 + Node 20 + MariaDB 10.11
 2. Cache pip/yarn dependencies
 3. Install `frappe-bench`, initialize bench, configure MariaDB charset (`utf8mb4`)
 4. Clone this app into the bench, install requirements
