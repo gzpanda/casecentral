@@ -23,33 +23,38 @@ def execute(filters=None):
 	filters = filters or {}
 
 	conditions = "1=1"
+	values = {}
 
 	if filters.get("matter_type"):
-		conditions += f" and matter.matter_type = '{filters.get('matter_type')}'"
-		
+		conditions += " and matter.matter_type = %(matter_type)s"
+		values["matter_type"] = filters.get("matter_type")
+
 	if filters.get("service_type"):
-		conditions += f" and matter.service_type = '{filters.get('service_type')}'"
-		
+		conditions += " and matter.service_type = %(service_type)s"
+		values["service_type"] = filters.get("service_type")
+
 	if filters.get("service"):
-		conditions += f" and matter.service = '{filters.get('service')}'"
-		
+		conditions += " and matter.service = %(service)s"
+		values["service"] = filters.get("service")
+
 	if filters.get("customer"):
-		conditions += f" and matter.customer = '{filters.get('customer')}'"
-		
+		conditions += " and matter.customer = %(customer)s"
+		values["customer"] = filters.get("customer")
+
 	if filters.get("from_date"):
-		from_date = getdate(filters["from_date"])
-		conditions += f" and matter.posting_date >= '{from_date}'"
-		
+		conditions += " and matter.posting_date >= %(from_date)s"
+		values["from_date"] = getdate(filters["from_date"])
+
 	if filters.get("to_date"):
-		to_date = getdate(filters["to_date"])
-		conditions += f" and matter.posting_date <= '{to_date}'"
+		conditions += " and matter.posting_date <= %(to_date)s"
+		values["to_date"] = getdate(filters["to_date"])
 
 	data = []
 	# matter_status_counts = {"Open": 0, "Working": 0, "Pending": 0, "Completed": 0, "Cancelled": 0}
 	matter_status_counts = {}
 	matter_distribution_by_service = {}
 
-	matters = frappe.db.sql(f"""
+	matters = frappe.db.sql("""
 		select
 			matter.name as matter,
 			matter.customer as customer,
@@ -65,7 +70,7 @@ def execute(filters=None):
 			{conditions}
 		order by
 			matter.posting_date asc
-	""", as_dict=True)
+	""".format(conditions=conditions), values, as_dict=True)
 
 	for matter in matters:
 		row = {

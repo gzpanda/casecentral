@@ -3,7 +3,7 @@ from frappe.contacts.doctype.contact.contact import get_default_contact
 
 def execute():
 
-    x = frappe.get_list('Customer', fields = ['name','customer_name', 'contact_no','contact_email'])
+    x = frappe.get_all('Customer', fields=['name', 'customer_name', 'contact_no', 'contact_email'])
     for record in x:
         contact = get_default_contact("Customer", record.get('name'))
         if not contact:

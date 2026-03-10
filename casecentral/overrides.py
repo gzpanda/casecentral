@@ -11,9 +11,9 @@ class CustomSalesInvoice(SalesInvoice):
 
 		for checked_item in checked_values:
 			item_line = self.append("items", {})
-			price_list, price_list_currency = frappe.db.get_values(
+			price_list, price_list_currency = frappe.db.get_value(
 				"Price List", {"selling": 1}, ["name", "currency"]
-			)[0]
+			)
 			args = {
 				"doctype": "Sales Invoice",
 				"item_code": checked_item["item"],
